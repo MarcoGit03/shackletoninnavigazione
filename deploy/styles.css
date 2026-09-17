@@ -212,7 +212,7 @@ body{ background: #eef1f2; }
 .hero__route-boat{ opacity: 0; animation: boatFadeIn .5s ease 3.8s forwards; }
 @keyframes boatFadeIn{ to{ opacity: 1; } }
 .hero__route-boat-motion, .hero__wake-motion{
-  offset-path: path('M 150 836 C 120 700, 260 640, 330 560 C 430 445, 380 340, 470 255 C 560 170, 700 190, 790 120');
+  offset-path: path('M 150 836 C 120 700, 260 640, 330 560 C 430 445, 380 340, 470 255 C 600 180, 820 140, 940 195');
   offset-rotate: auto; animation-name: boatMove; animation-duration: 8s; animation-timing-function: linear; animation-iteration-count: infinite;
 }
 .hero__route-boat-motion{ animation-delay: 3.8s; }
@@ -228,11 +228,11 @@ body{ background: #eef1f2; }
 .hero__wake-dot--1{ opacity: .38; } .hero__wake-dot--2{ opacity: .26; }
 .hero__wake-dot--3{ opacity: .16; } .hero__wake-dot--4{ opacity: .08; }
 
-/* ---- rosa dei venti interattiva — ancorata alla fine della rotta ---- */
+/* ---- rosa dei venti interattiva — nello spazio libero fra il cerchio e i trattini ---- */
 .hero__compass{
-  position: absolute; top: 14%; left: 78%;
+  position: absolute; top: 20%; left: 96.8%;
   translate: -50% -50%;
-  width: clamp(40px, 6.4vw, 58px); height: clamp(40px, 6.4vw, 58px);
+  width: clamp(28px, 4.6vw, 40px); height: clamp(28px, 4.6vw, 40px);
   z-index: 1; opacity: 0; transform-origin: 50% 50%;
   animation: compassIn 1s cubic-bezier(.2,.8,.3,1.15) 3.6s forwards;
 }
