@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ANTEPRIMA — Animazione rotta | Shackleton Consulting</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../styles.css">
+<style>
+  /* ---- solo per questa pagina di anteprima ---- */
+  .preview-banner{
+    position: sticky; top: 0; z-index: 999;
+    background: #1e1e1c; color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-size: .85rem; font-weight: 600;
+    text-align: center; padding: 10px 16px;
+    letter-spacing: .02em;
+  }
+  .preview-banner strong{ color: #6cb2e8; }
+
+  /* ---- rotta tratteggiata ---- */
+  .hero__route{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 1; /* sopra al cerchio, sotto al testo */
+  }
+  .hero__route-path{
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 9 11;
+    opacity: .55;
+    stroke-dashoffset: 1400;
+    animation: routeDraw 2.6s cubic-bezier(.3,.7,.2,1) 1.1s forwards;
+  }
+  @keyframes routeDraw{
+    to{ stroke-dashoffset: 0; }
+  }
+
+  .hero__route-boat{
+    opacity: 0;
+    animation: boatFadeIn .6s ease 3.5s forwards;
+  }
+  @keyframes boatFadeIn{
+    to{ opacity: 1; }
+  }
+  .hero__route-boat-motion{
+    offset-path: path('M 150 836 C 120 700, 260 640, 330 560 C 430 445, 380 340, 470 255 C 560 170, 700 190, 790 120');
+    offset-rotate: auto;
+    animation: boatMove 8s linear 3.5s infinite;
+  }
+  @keyframes boatMove{
+    from{ offset-distance: 0%; }
+    to{ offset-distance: 100%; }
+  }
+  .hero__route-boat-mark{
+    fill: var(--blue);
+  }
+
+  /* ---- rosa dei venti ---- */
+  .hero__compass{
+    position: absolute;
+    top: 9%;
+    right: 6%;
+    width: clamp(38px, 6vw, 54px);
+    height: clamp(38px, 6vw, 54px);
+    z-index: 1;
+    opacity: 0;
+    transform-origin: 50% 50%;
+    animation: compassIn 1s cubic-bezier(.2,.8,.3,1.15) 2.6s forwards;
+  }
+  @keyframes compassIn{
+    0%{ opacity: 0; transform: rotate(-35deg) scale(.7); }
+    70%{ opacity: 1; }
+    100%{ opacity: .85; transform: rotate(0deg) scale(1); }
+  }
+  .hero__compass svg{ width: 100%; height: 100%; display: block; }
+  .hero__compass .c-ring{ fill: none; stroke: var(--blue-dark); stroke-width: 2.5; opacity: .55; }
+  .hero__compass .c-point{ fill: var(--blue-dark); }
+  .hero__compass .c-point--accent{ fill: var(--blue); }
+  .hero__compass .c-n{
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    fill: var(--blue-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero__route-path{ animation: none; stroke-dashoffset: 0; }
+    .hero__route-boat{ animation: none; opacity: 1; }
+    .hero__route-boat-motion{ animation: none; offset-distance: 35%; }
+    .hero__compass{ animation: none; opacity: .85; transform: none; }
+  }
+
+  @media (max-width: 980px){
+    .hero__compass{ top: 4%; right: 8%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-banner">👁 ANTEPRIMA — <strong>non è la pagina live</strong> — animazione rotta + rosa dei venti</div>
+
+<div class="page">
+
+  <header class="hero" id="top">
+    <div class="hero__visual" aria-hidden="false">
+      <picture>
+        <source srcset="../images/circle-sketch.webp" type="image/webp">
+        <img class="hero__circle" src="../images/circle-sketch.png" alt="" aria-hidden="true" width="983" height="1000">
+      </picture>
+
+      <!-- ROTTA TRATTEGGIATA + BARCHETTA -->
+      <svg class="hero__route" viewBox="0 0 983 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path class="hero__route-path" d="M 150 836 C 120 700, 260 640, 330 560 C 430 445, 380 340, 470 255 C 560 170, 700 190, 790 120" />
+        <g class="hero__route-boat">
+          <g class="hero__route-boat-motion">
+            <polygon class="hero__route-boat-mark" points="0,-8 6,6 0,3 -6,6" />
+          </g>
+        </g>
+      </svg>
+
+      <!-- ROSA DEI VENTI -->
+      <div class="hero__compass" aria-hidden="true">
+        <svg viewBox="0 0 60 60">
+          <circle class="c-ring" cx="30" cy="30" r="24" />
+          <polygon class="c-point" points="30,6 34,28 30,24 26,28" />
+          <polygon class="c-point--accent" points="30,54 34,32 30,36 26,32" />
+          <polygon class="c-point--accent" points="6,30 28,26 24,30 28,34" />
+          <polygon class="c-point--accent" points="54,30 32,34 36,30 32,26" />
+          <circle class="c-point" cx="30" cy="30" r="2.4" />
+          <text class="c-n" x="30" y="17" text-anchor="middle">N</text>
+        </svg>
+      </div>
+
+      <h1 class="hero__heading">
+        <span class="hero__line hero__line--ink" style="--d:1">In navigazione</span>
+        <span class="hero__line hero__line--ink" style="--d:2">verso nuove rotte.</span>
+        <span class="hero__line hero__line--blue" style="--d:3">In arrivo</span>
+        <span class="hero__line hero__line--blue" style="--d:4">il nuovo sito</span>
+        <span class="hero__line hero__line--blue" style="--d:5">Shackleton.</span>
+      </h1>
+    </div>
+
+    <div class="hero__quote-wrap">
+      <blockquote class="hero__quote">
+        <span class="quote-mark quote-mark--open" aria-hidden="true">&ldquo;</span>
+        <div class="hero__quote-text">
+          <p>C'è un momento in cui anche i luoghi in cui ci raccontiamo hanno bisogno di riflettere lo spazio che abbiamo conquistato.</p>
+          <p>Stiamo rinnovando la nostra casa digitale: una veste grafica completamente nuova e idee inedite per accompagnarvi con ancora più precisione nel mondo della salute.</p>
+          <p>Cambia l'aspetto, ma la rotta resta la stessa: la solidità di oltre venticinque anni di esperienza sul campo, la cura nell'ascolto e la precisione della ricerca.</p>
+          <p class="hero__signoff">Stay tuned.<span class="quote-mark quote-mark--close" aria-hidden="true">&rdquo;</span></p>
+        </div>
+      </blockquote>
+    </div>
+  </header>
+
+  <footer class="site-footer" id="contatti">
+    <div class="site-footer__inner">
+      <div class="site-footer__contact">
+        <h2 class="site-footer__label">Contatti</h2>
+        <address>
+          Shackleton Consulting<br>
+          Corso Carlo Rosselli, 9A/9B<br>
+          54033 Carrara (MS) | Italia<br>
+          <a href="https://www.shackleton.it">www.shackleton.it</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:info@shackleton.it">info@shackleton.it</a>
+        </address>
+      </div>
+
+      <div class="site-footer__brand">
+        <img class="site-footer__logo" src="../images/logo-shackleton.png" alt="Shackleton Consulting" width="1920" height="416" loading="lazy">
+        <p class="site-footer__tagline">risultati <strong>ripetibili</strong>, nel tempo.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="../site.js" defer></script>
+</body>
+</html>

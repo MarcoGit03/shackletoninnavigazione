@@ -1,0 +1,6 @@
+# Sorgente grafico (non necessario al deploy, resta solo in locale)
+LANDING PAGE SITO.pdf
+
+# File di sistema
+.DS_Store
+Thumbs.db

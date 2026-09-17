@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "landing-provvisoria",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8934", "--directory", "C:\\Users\\Marco Lori\\Desktop\\Claude\\Landing Provvisoria"],
+      "port": 8934
+    }
+  ]
+}
