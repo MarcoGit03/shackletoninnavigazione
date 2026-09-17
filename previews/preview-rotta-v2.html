@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ANTEPRIMA v2 — Animazione rotta "WOW" | Shackleton Consulting</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../styles.css">
+<style>
+  /* ---- solo per questa pagina di anteprima ---- */
+  .preview-banner{
+    position: sticky; top: 0; z-index: 999;
+    background: #1e1e1c; color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-size: .85rem; font-weight: 600;
+    text-align: center; padding: 10px 16px;
+    letter-spacing: .02em;
+  }
+  .preview-banner strong{ color: #6cb2e8; }
+
+  /* ---- anello radar rotante ---- */
+  .hero__radar{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0;
+    animation: radarIn 1s ease 1s forwards;
+  }
+  @keyframes radarIn{ to{ opacity: 1; } }
+  .hero__radar-ring{
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 1.4;
+    stroke-dasharray: 2 14;
+    opacity: .4;
+    transform-origin: 491px 500px;
+    animation: radarSpin 60s linear infinite;
+  }
+  .hero__radar-ring--b{
+    stroke-dasharray: 1 26;
+    opacity: .25;
+    animation-duration: 90s;
+    animation-direction: reverse;
+  }
+  @keyframes radarSpin{ to{ transform: rotate(360deg); } }
+
+  /* ---- rotta tratteggiata luminosa ---- */
+  .hero__route{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 1; /* sopra al cerchio, sotto al testo */
+  }
+  .hero__route-path{
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 9 11;
+    opacity: .7;
+    stroke-dashoffset: 1400;
+    filter: drop-shadow(0 0 5px rgba(50,135,200,.85)) drop-shadow(0 0 12px rgba(50,135,200,.35));
+    animation: routeDraw 2.5s cubic-bezier(.3,.7,.2,1) 1.1s forwards;
+  }
+  @keyframes routeDraw{
+    to{ stroke-dashoffset: 0; }
+  }
+
+  /* ---- waypoint ping ---- */
+  .hero__waypoint{ opacity: 0; }
+  .hero__waypoint-dot{
+    fill: var(--blue);
+    filter: drop-shadow(0 0 4px rgba(50,135,200,.9));
+  }
+  .hero__waypoint-ring{
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 2;
+    transform-origin: center;
+  }
+  .hero__waypoint--1{ animation: waypointIn .4s ease 1.75s forwards; }
+  .hero__waypoint--2{ animation: waypointIn .4s ease 2.55s forwards; }
+  .hero__waypoint--3{ animation: waypointIn .4s ease 3.35s forwards; }
+  @keyframes waypointIn{ to{ opacity: 1; } }
+  .hero__waypoint--1 .hero__waypoint-ring{ animation: ping 1.1s ease-out 1.75s; }
+  .hero__waypoint--2 .hero__waypoint-ring{ animation: ping 1.1s ease-out 2.55s; }
+  .hero__waypoint--3 .hero__waypoint-ring{ animation: ping 1.1s ease-out 3.35s; }
+  @keyframes ping{
+    0%{ transform: scale(.3); opacity: .9; }
+    100%{ transform: scale(2.6); opacity: 0; }
+  }
+
+  /* ---- barchetta + scia ---- */
+  .hero__route-boat{
+    opacity: 0;
+    animation: boatFadeIn .5s ease 3.8s forwards;
+  }
+  @keyframes boatFadeIn{ to{ opacity: 1; } }
+
+  .hero__route-boat-motion,
+  .hero__wake-motion{
+    offset-path: path('M 150 836 C 120 700, 260 640, 330 560 C 430 445, 380 340, 470 255 C 560 170, 700 190, 790 120');
+    offset-rotate: auto;
+    animation-name: boatMove;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .hero__route-boat-motion{ animation-delay: 3.8s; }
+  @keyframes boatMove{
+    from{ offset-distance: 0%; }
+    to{ offset-distance: 100%; }
+  }
+  .hero__route-boat-mark{
+    fill: var(--blue);
+    filter: drop-shadow(0 0 5px rgba(50,135,200,.9));
+  }
+
+  .hero__wake{ opacity: 0; animation: boatFadeIn .5s ease 3.8s forwards; }
+  .hero__wake-dot{ fill: var(--blue); }
+  .hero__wake-motion--1{ animation-delay: 3.94s; }
+  .hero__wake-motion--2{ animation-delay: 4.08s; }
+  .hero__wake-motion--3{ animation-delay: 4.24s; }
+  .hero__wake-motion--4{ animation-delay: 4.42s; }
+  .hero__wake-dot--1{ opacity: .38; }
+  .hero__wake-dot--2{ opacity: .26; }
+  .hero__wake-dot--3{ opacity: .16; }
+  .hero__wake-dot--4{ opacity: .08; }
+
+  /* ---- rosa dei venti interattiva ---- */
+  .hero__compass{
+    position: absolute;
+    top: 9%;
+    right: 6%;
+    width: clamp(40px, 6.4vw, 58px);
+    height: clamp(40px, 6.4vw, 58px);
+    z-index: 1;
+    opacity: 0;
+    transform-origin: 50% 50%;
+    animation: compassIn 1s cubic-bezier(.2,.8,.3,1.15) 2.6s forwards;
+  }
+  @keyframes compassIn{
+    0%{ opacity: 0; transform: rotate(-35deg) scale(.7); }
+    70%{ opacity: 1; }
+    100%{ opacity: .9; transform: rotate(0deg) scale(1); }
+  }
+  .hero__compass svg{ width: 100%; height: 100%; display: block; overflow: visible; }
+  .hero__compass .c-ring{ fill: none; stroke: var(--blue-dark); stroke-width: 2.5; opacity: .55; }
+  .hero__compass .c-point{ fill: var(--blue-dark); }
+  .hero__compass .c-point--accent{ fill: var(--blue); }
+  .hero__compass .c-needle{
+    transform-origin: 30px 30px;
+    transition: transform .25s cubic-bezier(.2,.7,.3,1);
+    filter: drop-shadow(0 0 3px rgba(50,135,200,.6));
+  }
+  .hero__compass .c-n{
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    fill: var(--blue-dark);
+  }
+
+  /* ---- shimmer sul titolo ---- */
+  .hero__heading{ position: relative; overflow: hidden; }
+  .hero__heading::after{
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -60%;
+    width: 40%;
+    height: 140%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.75) 45%, rgba(255,255,255,.75) 55%, transparent);
+    transform: skewX(-18deg);
+    mix-blend-mode: overlay;
+    opacity: 0;
+    animation: shimmer 1.4s cubic-bezier(.3,.6,.2,1) 1.85s;
+  }
+  @keyframes shimmer{
+    0%{ opacity: 0; left: -60%; }
+    15%{ opacity: 1; }
+    60%{ opacity: 1; }
+    100%{ opacity: 0; left: 130%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero__route-path{ animation: none; stroke-dashoffset: 0; }
+    .hero__route-boat, .hero__wake{ animation: none; opacity: 1; }
+    .hero__route-boat-motion, .hero__wake-motion{ animation: none; offset-distance: 35%; }
+    .hero__compass{ animation: none; opacity: .9; transform: none; }
+    .hero__radar{ animation: none; opacity: 1; }
+    .hero__radar-ring{ animation: none; }
+    .hero__waypoint{ animation: none; opacity: 1; }
+    .hero__waypoint-ring{ animation: none; opacity: 0; }
+    .hero__heading::after{ animation: none; opacity: 0; }
+  }
+
+  @media (max-width: 980px){
+    .hero__compass{ top: 4%; right: 8%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-banner">👁 ANTEPRIMA v2 — <strong>non è la pagina live</strong> — versione "WOW" con bagliore, radar, scia e bussola interattiva</div>
+
+<div class="page">
+
+  <header class="hero" id="top">
+    <div class="hero__visual" aria-hidden="false">
+      <picture>
+        <source srcset="../images/circle-sketch.webp" type="image/webp">
+        <img class="hero__circle" src="../images/circle-sketch.png" alt="" aria-hidden="true" width="983" height="1000">
+      </picture>
+
+      <!-- ANELLO RADAR -->
+      <svg class="hero__radar" viewBox="0 0 983 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <circle class="hero__radar-ring hero__radar-ring--a" cx="491" cy="500" r="487" />
+        <circle class="hero__radar-ring hero__radar-ring--b" cx="491" cy="500" r="462" />
+      </svg>
+
+      <!-- ROTTA + WAYPOINT + BARCHETTA + SCIA -->
+      <svg class="hero__route" viewBox="0 0 983 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path class="hero__route-path" d="M 150 836 C 120 700, 260 640, 330 560 C 430 445, 380 340, 470 255 C 560 170, 700 190, 790 120" />
+
+        <g class="hero__waypoint hero__waypoint--1" transform="translate(203,677)">
+          <circle class="hero__waypoint-ring" r="6" />
+          <circle class="hero__waypoint-dot" r="4.5" />
+        </g>
+        <g class="hero__waypoint hero__waypoint--2" transform="translate(404,396)">
+          <circle class="hero__waypoint-ring" r="6" />
+          <circle class="hero__waypoint-dot" r="4.5" />
+        </g>
+        <g class="hero__waypoint hero__waypoint--3" transform="translate(630,182)">
+          <circle class="hero__waypoint-ring" r="6" />
+          <circle class="hero__waypoint-dot" r="4.5" />
+        </g>
+
+        <g class="hero__wake">
+          <g class="hero__wake-motion hero__wake-motion--4"><circle class="hero__wake-dot hero__wake-dot--4" r="3" /></g>
+          <g class="hero__wake-motion hero__wake-motion--3"><circle class="hero__wake-dot hero__wake-dot--3" r="3.6" /></g>
+          <g class="hero__wake-motion hero__wake-motion--2"><circle class="hero__wake-dot hero__wake-dot--2" r="4.2" /></g>
+          <g class="hero__wake-motion hero__wake-motion--1"><circle class="hero__wake-dot hero__wake-dot--1" r="4.8" /></g>
+        </g>
+
+        <g class="hero__route-boat">
+          <g class="hero__route-boat-motion">
+            <polygon class="hero__route-boat-mark" points="0,-9 7,7 0,3.5 -7,7" />
+          </g>
+        </g>
+      </svg>
+
+      <!-- ROSA DEI VENTI -->
+      <div class="hero__compass" id="compass" aria-hidden="true">
+        <svg viewBox="0 0 60 60">
+          <circle class="c-ring" cx="30" cy="30" r="24" />
+          <g class="c-needle">
+            <polygon class="c-point" points="30,6 34,28 30,24 26,28" />
+            <polygon class="c-point--accent" points="30,54 34,32 30,36 26,32" />
+            <polygon class="c-point--accent" points="6,30 28,26 24,30 28,34" />
+            <polygon class="c-point--accent" points="54,30 32,34 36,30 32,26" />
+          </g>
+          <circle class="c-point" cx="30" cy="30" r="2.4" />
+          <text class="c-n" x="30" y="17" text-anchor="middle">N</text>
+        </svg>
+      </div>
+
+      <h1 class="hero__heading">
+        <span class="hero__line hero__line--ink" style="--d:1">In navigazione</span>
+        <span class="hero__line hero__line--ink" style="--d:2">verso nuove rotte.</span>
+        <span class="hero__line hero__line--blue" style="--d:3">In arrivo</span>
+        <span class="hero__line hero__line--blue" style="--d:4">il nuovo sito</span>
+        <span class="hero__line hero__line--blue" style="--d:5">Shackleton.</span>
+      </h1>
+    </div>
+
+    <div class="hero__quote-wrap">
+      <blockquote class="hero__quote">
+        <span class="quote-mark quote-mark--open" aria-hidden="true">&ldquo;</span>
+        <div class="hero__quote-text">
+          <p>C'è un momento in cui anche i luoghi in cui ci raccontiamo hanno bisogno di riflettere lo spazio che abbiamo conquistato.</p>
+          <p>Stiamo rinnovando la nostra casa digitale: una veste grafica completamente nuova e idee inedite per accompagnarvi con ancora più precisione nel mondo della salute.</p>
+          <p>Cambia l'aspetto, ma la rotta resta la stessa: la solidità di oltre venticinque anni di esperienza sul campo, la cura nell'ascolto e la precisione della ricerca.</p>
+          <p class="hero__signoff">Stay tuned.<span class="quote-mark quote-mark--close" aria-hidden="true">&rdquo;</span></p>
+        </div>
+      </blockquote>
+    </div>
+  </header>
+
+  <footer class="site-footer" id="contatti">
+    <div class="site-footer__inner">
+      <div class="site-footer__contact">
+        <h2 class="site-footer__label">Contatti</h2>
+        <address>
+          Shackleton Consulting<br>
+          Corso Carlo Rosselli, 9A/9B<br>
+          54033 Carrara (MS) | Italia<br>
+          <a href="https://www.shackleton.it">www.shackleton.it</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:info@shackleton.it">info@shackleton.it</a>
+        </address>
+      </div>
+
+      <div class="site-footer__brand">
+        <img class="site-footer__logo" src="../images/logo-shackleton.png" alt="Shackleton Consulting" width="1920" height="416" loading="lazy">
+        <p class="site-footer__tagline">risultati <strong>ripetibili</strong>, nel tempo.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="../site.js" defer></script>
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var visual = document.querySelector(".hero__visual");
+  var needle = document.querySelector(".c-needle");
+  if (!visual || !needle || !supportsHover || reduceMotion) return;
+
+  var compass = document.getElementById("compass");
+  var target = 0, current = 0, raf = null;
+
+  visual.addEventListener("mousemove", function (event) {
+    var rect = compass.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    var dx = event.clientX - cx;
+    var dy = event.clientY - cy;
+    var angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    var delta = ((angle % 360) + 360) % 360;
+    if (delta > 180) delta -= 360;
+    target = Math.max(-22, Math.min(22, delta * 0.18));
+    if (!raf) raf = requestAnimationFrame(tick);
+  });
+
+  visual.addEventListener("mouseleave", function () {
+    target = 0;
+    if (!raf) raf = requestAnimationFrame(tick);
+  });
+
+  function tick() {
+    current += (target - current) * 0.12;
+    needle.style.transform = "rotate(" + current.toFixed(2) + "deg)";
+    if (Math.abs(target - current) > 0.05) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = null;
+    }
+  }
+})();
+</script>
+</body>
+</html>
