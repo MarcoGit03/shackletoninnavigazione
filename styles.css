@@ -228,12 +228,13 @@ body{ background: #eef1f2; }
 .hero__wake-dot--1{ opacity: .38; } .hero__wake-dot--2{ opacity: .26; }
 .hero__wake-dot--3{ opacity: .16; } .hero__wake-dot--4{ opacity: .08; }
 
-/* ---- rosa dei venti interattiva ---- */
+/* ---- rosa dei venti interattiva — ancorata alla fine della rotta ---- */
 .hero__compass{
-  position: absolute; bottom: 8%; right: 7%;
+  position: absolute; top: 14%; left: 78%;
+  translate: -50% -50%;
   width: clamp(40px, 6.4vw, 58px); height: clamp(40px, 6.4vw, 58px);
   z-index: 1; opacity: 0; transform-origin: 50% 50%;
-  animation: compassIn 1s cubic-bezier(.2,.8,.3,1.15) 2.6s forwards;
+  animation: compassIn 1s cubic-bezier(.2,.8,.3,1.15) 3.6s forwards;
 }
 @keyframes compassIn{ 0%{ opacity: 0; transform: rotate(-35deg) scale(.7); } 70%{ opacity: 1; } 100%{ opacity: .9; transform: rotate(0deg) scale(1); } }
 .hero__compass svg{ width: 100%; height: 100%; display: block; overflow: visible; }
@@ -530,9 +531,6 @@ address a:focus-visible{
   .hero__line--blue{ font-size: 1.65rem; }
 }
 
-@media (max-width: 980px){
-  .hero__compass{ bottom: 5%; right: 9%; }
-}
 
 /* ==========================================================================
    MOTION PREFERENCES
