@@ -246,34 +246,13 @@ body{ background: #eef1f2; }
 
 .hero__heading{
   position: relative;
+  z-index: 2;
   margin: 0;
   padding: 8% 10%;
   text-align: center;
   font-weight: 900;
   line-height: 1.08;
   letter-spacing: -0.01em;
-  overflow: hidden;
-}
-
-.hero__heading::after{
-  content: "";
-  position: absolute;
-  top: -20%;
-  left: -60%;
-  width: 40%;
-  height: 140%;
-  background: linear-gradient(100deg, transparent, rgba(255,255,255,.75) 45%, rgba(255,255,255,.75) 55%, transparent);
-  transform: skewX(-18deg);
-  mix-blend-mode: overlay;
-  opacity: 0;
-  animation: shimmer 1.4s cubic-bezier(.3,.6,.2,1) 1.85s;
-  pointer-events: none;
-}
-@keyframes shimmer{
-  0%{ opacity: 0; left: -60%; }
-  15%{ opacity: 1; }
-  60%{ opacity: 1; }
-  100%{ opacity: 0; left: 130%; }
 }
 
 .hero__line{
@@ -552,7 +531,6 @@ address a:focus-visible{
   .hero__radar{ opacity: 1; }
   .hero__waypoint{ opacity: 1; }
   .hero__waypoint-ring{ opacity: 0; }
-  .hero__heading::after{ opacity: 0; }
   .hero__brand-word{ background-position: 0 0; }
   .star-twinkle{ opacity: .5; }
 }
