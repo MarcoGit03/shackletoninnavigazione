@@ -60,4 +60,41 @@
       }
     }
   }
+
+  // Compass needle gently follows the pointer, desktop only.
+  var compass = document.getElementById("compass");
+  var needle = document.querySelector(".c-needle");
+
+  if (compass && needle && visual && supportsHover && !reduceMotion) {
+    var needleRaf = null;
+    var needleTarget = 0, needleCurrent = 0;
+
+    visual.addEventListener("mousemove", function (event) {
+      var rect = compass.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = event.clientX - cx;
+      var dy = event.clientY - cy;
+      var angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+      var delta = ((angle % 360) + 360) % 360;
+      if (delta > 180) delta -= 360;
+      needleTarget = Math.max(-22, Math.min(22, delta * 0.18));
+      if (!needleRaf) needleRaf = requestAnimationFrame(needleTick);
+    });
+
+    visual.addEventListener("mouseleave", function () {
+      needleTarget = 0;
+      if (!needleRaf) needleRaf = requestAnimationFrame(needleTick);
+    });
+
+    function needleTick() {
+      needleCurrent += (needleTarget - needleCurrent) * 0.12;
+      needle.style.transform = "rotate(" + needleCurrent.toFixed(2) + "deg)";
+      if (Math.abs(needleTarget - needleCurrent) > 0.05) {
+        needleRaf = requestAnimationFrame(needleTick);
+      } else {
+        needleRaf = null;
+      }
+    }
+  }
 })();
