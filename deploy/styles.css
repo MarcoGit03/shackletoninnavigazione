@@ -510,6 +510,87 @@ address a:focus-visible{
   .hero__line--blue{ font-size: 1.65rem; }
 }
 
+/* ==========================================================================
+   DESKTOP — tutto visibile in una sola schermata, senza scroll.
+   Calibrato sul formato desktop di riferimento 1920x1080. Sotto i 981px
+   il layout resta quello mobile/tablet abituale, invariato.
+   ========================================================================== */
+
+@media (min-width: 981px){
+  html, body{ height: 100%; }
+
+  .page{
+    height: 100vh;
+    min-height: 100vh;
+  }
+
+  :root{ --footer-wedge: clamp(18px, 3.2vh, 56px); }
+
+  .hero{
+    padding: clamp(6px, 1.4vh, 24px) var(--edge) clamp(8px, 1.6vh, 24px);
+    gap: clamp(28px, 3.5vw, 64px);
+    align-items: center;
+  }
+
+  .hero__visual{
+    max-width: min(500px, 42vh);
+  }
+
+  .hero__heading{
+    padding: 5% 9%;
+  }
+
+  .hero__line--ink{
+    font-size: clamp(1.3rem, 2.9vw, 2.3rem);
+  }
+  .hero__line--blue{
+    font-size: clamp(1.4rem, 3.2vw, 2.5rem);
+  }
+
+  .hero__quote-wrap{
+    padding: clamp(14px, 2.4vh, 36px);
+  }
+  .quote-mark{
+    font-size: clamp(1.8rem, 3.4vw, 2.9rem);
+  }
+  .hero__quote-text p{
+    font-size: clamp(.88rem, 1.1vw, 1.02rem);
+    line-height: 1.46;
+    margin-bottom: .6em;
+  }
+
+  .site-footer__inner{
+    padding: clamp(8px, 1.4vh, 26px) var(--edge) clamp(14px, 2vh, 36px);
+    gap: clamp(20px, 3vw, 44px);
+  }
+  .site-footer__label{
+    font-size: clamp(1.2rem, 2.2vw, 1.85rem);
+  }
+  address{
+    font-size: clamp(.8rem, 1.05vw, .92rem);
+    line-height: 1.45;
+  }
+  .site-footer__logo{
+    width: clamp(140px, 13vw, 230px);
+  }
+  .site-footer__tagline{
+    font-size: clamp(.75rem, .95vw, .88rem);
+  }
+}
+
+/* Rete di sicurezza: sugli schermi/finestre desktop davvero bassi il
+   footer con il logo resta comunque intero e visibile — a "pagarne
+   il prezzo" è la parte alta del cerchio, che viene tagliata invece
+   di far comparire lo scroll. */
+@media (min-width: 981px) and (max-height: 820px){
+  .hero{
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    align-items: end;
+  }
+}
+
 
 /* ==========================================================================
    MOTION PREFERENCES
